@@ -6,6 +6,7 @@
 # export DNS_ADJUSTER_CONFIG="ZONE_ID:example.com|ZONE_ID:example2.com"
 # export DNS_ADJUSTER_LOGPATH="/path/to/dns_adjuster.log"
 # export DNS_ADJUSTER_IPFILEPATH="/path/to/ip-file-path"
+# export DNS_ADJUSTER_AWS_PROFILE="my-aws-profile"  # optional
 # python dns_updater.py
 
 import os
@@ -91,7 +92,9 @@ def main():
     logger = setup_logging()
     try:
         # Initialize Route53 client
-        route53 = boto3.client('route53')
+        aws_profile = os.getenv('DNS_ADJUSTER_AWS_PROFILE')
+        session = boto3.Session(profile_name=aws_profile) if aws_profile else boto3.Session()
+        route53 = session.client('route53')
 
         # Get and parse environment variables
         config = os.getenv('DNS_ADJUSTER_CONFIG', '')

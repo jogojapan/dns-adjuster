@@ -83,3 +83,8 @@ IP address.
 __`DNS_ADJUSTER_CRONJOB`__ The cronjob configuration. All hosted zones /
 domains will be updated at the same time. They will only be updated if
 they did change since the previous check.
+
+__`DNS_ADJUSTER_AWS_PROFILE`__ (optional) The name of the AWS CLI named
+profile to use for authentication. If not set, the default profile (or
+other ambient credentials) will be used. Useful when mounting
+`~/.aws` into the container and you have multiple profiles configured.

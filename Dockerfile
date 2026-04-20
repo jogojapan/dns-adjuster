@@ -16,15 +16,6 @@ WORKDIR /app
 # Add the Python script
 COPY check-and-update-ip.py .
 
-# Add AWS CLI for credential handling
-RUN apt-get update && \
-    apt-get install -y cron curl unzip && \
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-    unzip awscliv2.zip && \
-    ./aws/install && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* awscliv2.zip aws
-
 # Modify the start-cron.sh script to include credential checking
 RUN echo '#!/bin/sh\n\
 # Check for AWS credentials\n\
